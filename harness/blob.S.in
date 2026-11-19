@@ -1,0 +1,14 @@
+/*
+ * blob.S.in - template for embedding the ABL PE into the harness.
+ *
+ * tools/run_harness.py generates build/blob.S from this file, substituting
+ * @ABL_PATH@ with the absolute path of the LinuxLoader.efi supplied with
+ * --abl. The firmware image itself is NOT part of this repository.
+ */
+.section .rodata.abl_blob, "a"
+.balign 16
+.global abl_blob_start
+abl_blob_start:
+.incbin "@ABL_PATH@"
+.global abl_blob_end
+abl_blob_end:

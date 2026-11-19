@@ -1,0 +1,22 @@
+QEMU_ABL_HARNESS start
+ABL_BLOB bytes=839680 load_base=0x50000000 wrapper_unlock=0x5001e424 wrapper_critical=0x5001e44c body=0x5001f740
+PE_LOAD base=0x50000000 image_base=0x0 image_size=0xcd000 sections=3 relocs_applied=1139 relocs_unknown=0
+VERIFY unlock-wrapper rva=0x1e424 got=0xd10083ff want=0xd10083ff ok
+VERIFY critical-wrapper rva=0x1e44c got=0xd10083ff want=0xd10083ff ok
+VERIFY getter-body rva=0x1f740 got=0x91002108 want=0x91002108 ok
+VERIFY cset rva=0x1f764 got=0x1a9f07e0 want=0x1a9f07e0 ok
+CANARY global=0x50099008 value=0x1122334455667788
+CASE unlock temp=0 devinfo=0 => 0
+CASE critical temp=0 devinfo=0 => 0
+CASE unlock temp=0 devinfo=1 => 1
+CASE critical temp=0 devinfo=1 => 1
+CASE unlock temp=1 devinfo=0 => 1
+CASE critical temp=1 devinfo=0 => 1
+CASE unlock temp=1 devinfo=1 => 1
+CASE critical temp=1 devinfo=1 => 1
+PATCH_CODE rva=0x1f764 old=0x1a9f07e0 new=0x52800020
+CASE unlock temp=0 devinfo=0 => 1
+CASE critical temp=0 devinfo=0 => 1
+CASE unlock temp=0 devinfo=1 => 1
+CASE critical temp=0 devinfo=1 => 1
+QEMU_SIM_DONE
